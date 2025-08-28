@@ -1,0 +1,17 @@
+#paragrafo{
+    display: absolute;
+    text-align: center;
+}
+
+.paragrafo {
+    display: absolute;
+    text-align: center;
+}
+.carro {
+    display: flex;
+    justify-content: center;
+}
+.carro:hover{
+    transform: scale(1.05);
+    text-shadow: 0 0 10px var(--cor-primaria);
+}

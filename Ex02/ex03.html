@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula02-Ex03</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .cadastro {
+            background: rgb(228, 225, 225);
+            padding: 10px 30px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 370px;
+            box-sizing: border-box;
+        }
+        h1{
+            font-family: sans-serif;
+            margin: 0;
+            
+        }
+        .nomes{
+            display: flex;
+            gap: 10px; 
+            width: 100%;
+            
+            input{
+                flex: 1; 
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                
+            }
+        }
+        .dados_pessoais{
+            input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        }
+        .data{
+            display: flex;
+            align-items: center;
+            gap: 1px;
+            .paragrafo{
+                padding-left: 4%;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 11px;
+                color: blue;
+            }
+        }
+        #ani{
+            margin: auto;
+        }
+        select{
+            padding: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #termos{
+            font-family: Arial;
+            font-size: 11px;
+        }
+        #abrir {
+            width: 70%;
+            padding: 7px;
+            background-color: #42b72a;
+            color: white;
+            font-family: tahoma;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #abrir:hover {
+            background-color: #36a420;
+        }
+    </style>
+</head>
+<body>
+    <form >
+        <div class="cadastro" >
+            <h1>Abra uma conta</h1>
+            <p><b>É gratuito e sempre será</b></p>
+            <div class="nomes">
+            <input type="text" id="Nome" placeholder="Nome" size="16" required>
+            <input type="text" placeholder="Sobrenome" size="18" required>
+            </div>
+            <div class="dados_pessoais">
+            <input type="text" placeholder="E-mail ou número do celular" pattern="^(\d{11}|[^\s@]+@[^\s@]+\.[^\s@]+)$" name="contato" required>
+            <input type="text" placeholder="Insira novamente o e-mail ou o celular" pattern="^(\d{11}|[^\s@]+@[^\s@]+\.[^\s@]+)$" name="contato" required>
+            <input type="password" placeholder="Nova senha" required>
+            </div>
+
+            
+            <p id="ani"><b>Aniversário</b></p>
+            <div class="data">
+            <select name="data" >
+                <option value="Dia">Dia</option>
+            </select>
+            <select name="mês" >
+                <option value="Mês">Mês</option>
+            </select>
+            <select name="ano" >
+                <option value="Ano">Ano</option>
+            </select>
+            <p class="paragrafo">Por que preciso informar minha data de nascimento?</p>
+            </div>
+            <input type="radio" name="sexo">Feminino
+            <input type="radio" name="sexo">Masculino
+
+            <p id="termos">Ao clicar em Abrir uma conta, você concorda como nossos Termos e que você leu nossas Política de Dados, incluindo nosso Uso de Cookies
+            </p>
+
+            <button id="abrir" type="submit">Abrir uma conta</button>
+        </div>   
+    </form>
+</body>

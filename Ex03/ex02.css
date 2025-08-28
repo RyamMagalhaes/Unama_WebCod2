@@ -1,0 +1,16 @@
+h3{
+    color: red;
+}
+.titulos{
+    color: blue;
+}
+table{
+    font-size: 16pt; 
+    font-family: Tahoma;
+}
+.media{
+    font-style: italic;
+}
+#media1{
+    font-weight: bold;
+}

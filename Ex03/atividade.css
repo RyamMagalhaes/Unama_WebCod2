@@ -1,0 +1,67 @@
+h1{
+    text-align: center;
+}
+#dados_pessoais{
+    background-color: lightblue;
+    border: dotted;
+    
+}
+#legenda01{
+    background-color: lightblue;
+}
+#dados1{
+    background-color: khaki;
+}
+#senha{
+    background-color: khaki;
+}
+#toggleSenha{
+    background-color: aqua;
+}
+
+#dados_profissionais{
+    background-color: lightcoral;
+    border: dotted;
+}
+#legenda02{
+    background-color: lightcoral;
+}
+#curriculo{
+    background-color: khaki;
+}
+
+#ações{
+    background-color: lightgreen;
+    border: dotted;
+       
+}
+#legenda03{
+        background-color: lightgreen;
+}
+
+.form{
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    #sub1{
+        background-color: green;
+        color: aliceblue;
+    }
+    #sub2{
+        background-color: orange;
+        color: aliceblue;
+    }
+}
+
+#sucesso {
+    display: none;
+    opacity: 0;
+    transition: opacity 1s ease;
+    background: #4CAF50;
+    color: white;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 03</title>
+    <link rel="stylesheet" href="atividade.css">
+    
+</head>
+<body>
+    <h1>Formulário de cadastro</h1>
+    <form id="cadastroForm">
+        <fieldset id="dados_pessoais">
+            <legend id="legenda01">Dados pessoais</legend>
+            Nome: <input type="text" size="30" id="dados1" required><br>
+            E-mail: <input type="email" id="dados1" size="30"required><br>
+            Senha: <input type="password"  id="senha" size="30" required>
+            <button type="button" id="toggleSenha">👁 Mostrar</button><br>
+            Cidade: <input type="text" size="30" id="dados1" required><br>
+            <label for="nome" >Estado:</label>
+            <select name="Estado" id="dados1" required>
+                <option value="" disabled selected>Escolha...</option> 
+                <option value="PA">Pará</option>
+                <option value="SP">São Paulo
+                </option>
+                <option value="RJ">Rio de Janeiro</option>
+            </select>
+        </fieldset>
+    
+        <br><fieldset id="dados_profissionais">
+            <legend id="legenda02">Dados profissionais</legend>
+            <b>Cargo Pretendido:</b><br>           
+            <input type="radio" name="cargo" value="cargo" required >Analista de Sistemas
+            <input type="radio" name="cargo" value="cargo">Analista de Banco de Dados
+            <input type="radio" name="cargo" value="cargo">Analista de Suporte<br>
+
+            <br><b>Tecnologia de Interesse: </b><br>
+            <input type="checkbox" name="Java" value="tecnologia" >Java
+            <input type="checkbox" name="Html,Java" value="tecnologia">HTML, CSS
+            <input type="checkbox" name="Javascript" value="tecnologia">Javascript
+            <input type="checkbox" name="SQL" value="tecnologia">SQL <br>
+
+            <br><b>Mini currículo:</b><br>
+        
+            <textarea name="Curso" id="curriculo" rows="10" cols="90" required></textarea> 
+           
+        </fieldset>
+    
+
+        <br><fieldset id="ações" class="form">
+            <legend id="legenda03">Ações</legend>
+            <input type="submit" value="Enviar" id="sub1">
+            <input type="reset" value="Limpar" id="sub2">
+
+        </fieldset>
+    </form>
+    <div id="sucesso">✅ Cadastro Realizado com sucesso!</div>
+
+    <!--Importando o JS-->
+    <script src="atividade.js"></script>
+</body>
+</html>
