@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevLivery</title>
+    <link rel="stylesheet" href="tela.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <svg width="40" height="40" viewBox="0 0 100 100" class="dev-logo">
+                <path d="M50,10 A40,40 0 1,1 50,90 A40,40 0 1,1 50,10 Z M50,20 A30,30 0 1,0 50,80 L50,20 Z" stroke-width="3" fill="none"/>
+                <path d="M60,30 L75,50 L60,70" stroke-width="3" fill="none"/>
+                <path d="M30,40 L45,40 L45,60 L30,60" stroke-width="3" fill="none"/>
+                <path d="M35,40 L35,60" stroke-width="3" fill="none"/>
+            </svg>
+            <h1>DevLivery</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="nav-link" data-screen="home">Início</a></li>
+                <li><a href="#" class="nav-link" data-screen="menu">Cardápio</a></li>
+                <li><a href="#" class="nav-link" data-screen="cart">Carrinho <span class="cart-count">0</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Tela Inicial -->
+        <section id="home-screen" class="screen active">
+            <div class="hero">
+                <h2>Bem-vindo ao DevLivery</h2>
+                <p><i>Peça sua comida favorita com entrega rápida e segura!</i></p>
+                <button class="cta-button" data-navigate="menu-screen">Ver Cardápio</button>
+            </div>
+            
+            <div class="features-section">
+                <div class="feature-card">
+                    <i class="fas fa-utensils feature-icon"></i>
+                    <h3>Comida Fresca</h3>
+                    <p>Ingredientes selecionados e de qualidade para o melhor sabor.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shipping-fast feature-icon"></i>
+                    <h3>Entrega Rápida</h3>
+                    <p>Receba seu pedido em até 30 minutos ou a entrega é por nossa conta!</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt feature-icon"></i>
+                    <h3>Pedido Fácil</h3>
+                    <p>Faça seu pedido em poucos cliques através do nosso aplicativo intuitivo.</p>
+                </div>
+            </div>
+            
+            <div class="about-section">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="Nossa Equipe">
+                </div>
+                <div class="about-content">
+                    <h2>Sobre Nós</h2>
+                <p>O DevLivery nasceu da paixão pela gastronomia e da vontade de proporcionar uma experiência única aos nossos clientes. Nossa missão é oferecer comida de qualidade com entrega rápida e eficiente.</p>
+                    <p>Trabalhamos com chefs talentosos e ingredientes selecionados, garantindo a qualidade de cada prato. Nosso compromisso é com a satisfação dos nossos clientes e a excelência em cada entrega.</p>
+                    <button class="secondary-button" data-navigate="menu-screen">Conheça Nosso Cardápio</button>
+                </div>
+            </div>
+            
+            <div class="highlights-section">
+                <h2>Destaques do Cardápio</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <img src="https://i.pinimg.com/736x/8e/81/85/8e8185e06bedc66a86c476ee00ad1056.jpg" alt="Tacacá">
+                        <h3>Tacacá</h3>
+                        <p>O clássico caldo de tucupi com jambu e camarão seco.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <img src="https://i.pinimg.com/736x/0e/83/47/0e83474f0e3d911008182385bf7aae0c.jpg" alt="Açaí">
+                        <h3>Açaí</h3>
+                        <p>Açaí cremoso servido à moda paraense.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <img src="https://i.pinimg.com/1200x/2f/98/6b/2f986bd19d94613578f0edd144cb602b.jpg" alt="Maniçoba">
+                        <h3>Maniçoba</h3>
+                        <p>Prato tradicional preparado com folha de mandioca e carnes variadas.</p>
+                    </div>
+                </div>
+            </div>
+            
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-clock"></i>
+                    <h3>Entrega Rápida</h3>
+                    <p>Receba seu pedido em até 30 minutos</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-fish"></i>
+                    <h3>Comida Paraense</h3>
+                    <p>Ingredientes regionais selecionados e de qualidade</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-wallet"></i>
+                    <h3>Pagamento Fácil</h3>
+                    <p>Diversas formas de pagamento disponíveis</p>
+                </div>
+            </div>
+            
+            <div class="testimonials">
+                <h2>O que nossos clientes dizem</h2>
+                <div class="testimonial-container">
+                    <div class="testimonial">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"O melhor tacacá que já comi! Entrega rápida e embalagem que mantém a temperatura ideal."</p>
+                        <p class="testimonial-author">- Maria Silva</p>
+                    </div>
+                    <div class="testimonial">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Pato no tucupi com qualidade de restaurante, mas no conforto da minha casa. Recomendo!"</p>
+                        <p class="testimonial-author">- João Santos</p>
+                    </div>
+                    <div class="testimonial">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="testimonial-text">"Açaí cremoso e delicioso! Atendimento excelente e entrega no prazo."</p>
+                        <p class="testimonial-author">- Ana Oliveira</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tela de Cardápio -->
+        <section id="menu-screen" class="screen">
+            <h2>Nosso Cardápio</h2>
+            
+            <div class="category-tabs">
+                <!-- As categorias serão preenchidas dinamicamente pelo JavaScript -->
+            </div>
+            
+            <div class="menu-items">
+                <!-- Os itens do menu serão preenchidos dinamicamente pelo JavaScript -->
+            </div>
+        </section>
+        </section>
+
+        <!-- Tela de Carrinho -->
+        <section id="cart-screen" class="screen">
+            <h2>Seu Carrinho</h2>
+            
+            <div id="cart-items">
+                <!-- Os itens do carrinho serão adicionados dinamicamente via JavaScript -->
+                <div class="empty-cart-message">Seu carrinho está vazio</div>
+            </div>
+            
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">R$ 0,00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Taxa de entrega:</span>
+                    <span id="delivery-fee">R$ 5,00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="total">R$ 0,00</span>
+                </div>
+            </div>
+            
+            <div class="cart-actions">
+                <button id="continue-shopping" class="secondary-button continue-shopping-btn" data-navigate="menu-screen">Continuar Comprando</button>
+                <button id="checkout-button" class="primary-button checkout-btn" data-navigate="payment-screen">Finalizar Pedido</button>
+            </div>
+        </section>
+
+        <!-- Tela de Pagamento -->
+        <section id="payment-screen" class="screen">
+            <h2>Pagamento</h2>
+            
+            <div class="delivery-info">
+                <h3>Informações de Entrega</h3>
+                <form id="delivery-form">
+                    <div class="form-group">
+                        <label for="customer-name">Nome Completo</label>
+                        <input type="text" id="customer-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-phone">Telefone</label>
+                        <input type="tel" id="customer-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-address">Endereço</label>
+                        <input type="text" id="customer-address" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="number">Número</label>
+                            <input type="text" id="number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="complement">Complemento</label>
+                            <input type="text" id="complement">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="neighborhood">Bairro</label>
+                        <input type="text" id="neighborhood" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">Cidade</label>
+                            <input type="text" id="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">Estado</label>
+                            <input type="text" id="state" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="payment-methods">
+                <h3>Forma de Pagamento</h3>
+                <div class="payment-options">
+                    <div class="payment-option">
+                        <input type="radio" id="credit-card" name="payment-method" value="credit-card" checked>
+                        <label for="credit-card">
+                            <i class="fas fa-credit-card"></i>
+                            Cartão de Crédito
+                        </label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="debit-card" name="payment-method" value="debit-card">
+                        <label for="debit-card">
+                            <i class="fas fa-credit-card"></i>
+                            Cartão de Débito
+                        </label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="pix" name="payment-method" value="pix">
+                        <label for="pix">
+                            <i class="fas fa-qrcode"></i>
+                            PIX
+                        </label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="cash" name="payment-method" value="cash">
+                        <label for="cash">
+                            <i class="fas fa-money-bill-wave"></i>
+                            Dinheiro
+                        </label>
+                    </div>
+                </div>
+                
+                <div id="credit-card-form" class="payment-form">
+                    <div class="form-group">
+                        <label for="card-number">Número do Cartão</label>
+                        <input type="text" id="card-number" placeholder="0000 0000 0000 0000">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiry-date">Validade</label>
+                            <input type="text" id="expiry-date" placeholder="MM/AA">
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="123">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-name">Nome no Cartão</label>
+                        <input type="text" id="card-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="installments">Parcelas</label>
+                        <select id="installments">
+                            <option value="1">1x sem juros</option>
+                            <option value="2">2x sem juros</option>
+                            <option value="3">3x sem juros</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="pix-form" class="payment-form" style="display: none;">
+                    <div class="pix-info">
+                        <p>Escaneie o QR Code abaixo para pagar:</p>
+                        <div class="pix-qrcode">
+                            <img src="https://via.placeholder.com/200" alt="QR Code PIX">
+                        </div>
+                        <p>Ou copie a chave PIX:</p>
+                        <div class="pix-key">
+                            <input type="text" value="fastfood@delivery.com.br" readonly>
+                            <button class="copy-button">Copiar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="cash-form" class="payment-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="cash-amount">Troco para quanto?</label>
+                        <input type="text" id="cash-amount" placeholder="R$ 0,00">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="order-summary">
+                <h3>Resumo do Pedido</h3>
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="payment-subtotal">R$ 0,00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Taxa de entrega:</span>
+                    <span id="payment-delivery-fee">R$ 5,00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="payment-total">R$ 0,00</span>
+                </div>
+            </div>
+            
+            <div class="payment-actions">
+                <button id="back-to-cart" class="secondary-button back-to-cart-btn" data-navigate="cart-screen">Voltar ao Carrinho</button>
+                <button id="confirm-payment" class="primary-button place-order-btn">Confirmar Pagamento</button>
+            </div>
+        </section>
+
+        <!-- Tela de Confirmação -->
+        <section id="confirmation-screen" class="screen">
+            <div class="confirmation-message">
+                <i class="fas fa-check-circle"></i>
+                <h2>Pedido Confirmado!</h2>
+                <p>Seu pedido foi realizado com sucesso.</p>
+                <div class="order-number">
+                    <p>Número do pedido:</p>
+                    <strong id="order-id">12345</strong>
+                </div>
+                <p>Você receberá atualizações sobre o status do seu pedido por telefone.</p>
+                <div class="estimated-time">
+                    <p>Tempo estimado de entrega:</p>
+                    <strong>30-45 minutos</strong>
+                </div>
+            </div>
+            
+            <div class="order-tracking">
+                <h3>Acompanhe seu pedido</h3>
+                <div class="tracking-steps">
+                    <div class="tracking-step active">
+                        <div class="step-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="step-info">
+                            <p class="step-name">Pedido Confirmado</p>
+                            <p class="step-time">Agora</p>
+                        </div>
+                    </div>
+                    <div class="tracking-step">
+                        <div class="step-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="step-info">
+                            <p class="step-name">Em Preparação</p>
+                            <p class="step-time">Em breve</p>
+                        </div>
+                    </div>
+                    <div class="tracking-step">
+                        <div class="step-icon">
+                            <i class="fas fa-motorcycle"></i>
+                        </div>
+                        <div class="step-info">
+                            <p class="step-name">Em Entrega</p>
+                            <p class="step-time">Em breve</p>
+                        </div>
+                    </div>
+                    <div class="tracking-step">
+                        <div class="step-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="step-info">
+                            <p class="step-name">Entregue</p>
+                            <p class="step-time">Em breve</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="confirmation-actions">
+                <button id="back-to-home" class="primary-button new-order-btn" data-navigate="home-screen">Voltar ao Início</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+            <svg width="60" height="60" viewBox="0 0 100 100" class="dev-logo">
+                <path d="M50,10 A40,40 0 1,1 50,90 A40,40 0 1,1 50,10 Z M50,20 A30,30 0 1,0 50,80 L50,20 Z" stroke-width="3" fill="none"/>
+                <path d="M60,30 L75,50 L60,70" stroke-width="3" fill="none"/>
+                <path d="M30,40 L45,40 L45,60 L30,60" stroke-width="3" fill="none"/>
+                <path d="M35,40 L35,60" stroke-width="3" fill="none"/>
+            </svg>
+            <h3>DevLivery</h3>
+        </div>
+            <div class="footer-info">
+                <div class="footer-section">
+                    <h4>Horário de Funcionamento</h4>
+                    <p>Segunda a Sexta: 10h às 22h</p>
+                    <p>Sábados e Domingos: 10h às 23h</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>Telefone: (91) 981939657</p>
+                    <p>Email: contato@devlivery.com</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociais</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 DevLivery. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="tela.js"></script>
+</body>
+</html>
