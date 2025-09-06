@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaga - Jogo de Arcade</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Courier New', monospace;
+            color: white;
+        }
+        #game-container {
+            text-align: center;
+        }
+        #instructions {
+            margin-top: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="p5-canvas"></div>
+        <div id="instructions">
+            <strong>CONTROLES:</strong><br>
+            ← → : Mover nave | ESPAÇO: Atirar | R: Reiniciar<br>
+            <strong>OBJETIVO:</strong> Destrua todos os alienígenas Galaga!<br>
+            <strong>ESPECIAL:</strong> Chefe Galaga pode capturar sua nave - resgate para formar Caça Duplo!
+        </div>
+    </div>
+
+    <script>
+    // Sprites
+    let imgPlayer, imgEnemy, imgEnemy2, imgExplosion;
+    let player, capturedShip = null, bullets = [], enemies = [], enemyBullets = [], explosions = [], stars = [];
+    let gameState = 'playing', score = 0, lives = 3, level = 1, waveStartTime = 0, enemyFormationComplete = false;
+    const CANVAS_WIDTH = 1000, CANVAS_HEIGHT = 600, PLAYER_SPEED = 5, BULLET_SPEED = 8, ENEMY_BULLET_SPEED = 4;
+
+    function preload() {
+        imgPlayer = loadImage('Assets/nave.png');
+        imgEnemy = loadImage('Assets/inimigos.png');
+        imgEnemy2 = loadImage('Assets/inimigos2.png');
+        imgExplosion = loadImage('Assets/explosão.png');
+    }
+    window.preload = preload;
+
+    function setup() {
+        let canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        canvas.parent('game-container');
+        initGame();
+    }
+
+    function initGame() {
+        player = { x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT - 50, width: 32, height: 32, isDead: false, isDoubleShip: false };
+        stars = [];
+        for (let i = 0; i < 50; i++) stars.push({ x: random(CANVAS_WIDTH), y: random(CANVAS_HEIGHT), brightness: random(100, 255), speed: random(0.5, 2) });
+        startWave();
+    }
+
+    function startWave() {
+        enemies = [];
+        bullets = [];
+        enemyBullets = [];
+        explosions = [];
+        enemyFormationComplete = false;
+        waveStartTime = millis();
+        createEnemyFormation();
+    }
+
+    function createEnemyFormation() {
+        const rows = 5, cols = 10, spacing = 60, startX = (CANVAS_WIDTH - (cols - 1) * spacing) / 2, startY = 80;
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                let type = row === 0 ? 'boss' : 'grunt';
+                enemies.push({
+                    x: startX + col * spacing,
+                    y: startY + row * 50,
+                    formationX: startX + col * spacing,
+                    formationY: startY + row * 50,
+                    width: 32,
+                    height: 32,
+                    type: type,
+                    health: type === 'boss' ? 2 : 1,
+                    maxHealth: type === 'boss' ? 2 : 1,
+                    state: 'entering',
+                    angle: 0,
+                    diveTarget: null,
+                    entryDelay: (row * cols + col) * 100,
+                    formed: false
+                });
+            }
+        }
+    }
+
+    function draw() {
+        background(0);
+        drawStars();
+        if (gameState === 'playing') { updateGame(); drawGame(); }
+        else if (gameState === 'gameOver') drawGameOver();
+        else if (gameState === 'levelComplete') drawLevelComplete();
+        drawUI();
+    }
+
+    function drawStars() {
+        for (let star of stars) {
+            fill(255, star.brightness); noStroke(); circle(star.x, star.y, 2);
+            star.y += star.speed;
+            if (star.y > CANVAS_HEIGHT) { star.y = 0; star.x = random(CANVAS_WIDTH); }
+        }
+    }
+
+    function updateGame() {
+        updatePlayer(); updateEnemies(); updateBullets(); updateEnemyBullets(); updateExplosions(); checkCollisions(); checkGameState();
+    }
+
+    function updatePlayer() {
+        if (player.isDead) return;
+        if (keyIsDown(LEFT_ARROW) && player.x > player.width / 2) player.x -= PLAYER_SPEED;
+        if (keyIsDown(RIGHT_ARROW) && player.x < CANVAS_WIDTH - player.width / 2) player.x += PLAYER_SPEED;
+    }
+
+    function updateEnemies() {
+        let allFormed = true;
+        for (let i = enemies.length - 1; i >= 0; i--) {
+            let enemy = enemies[i];
+            if (enemy.state === 'entering') {
+                if (millis() - waveStartTime > enemy.entryDelay) {
+                    let dx = enemy.formationX - enemy.x, dy = enemy.formationY - enemy.y, dist = sqrt(dx * dx + dy * dy);
+                    if (dist > 2) { enemy.x += dx * 0.08; enemy.y += dy * 0.08; allFormed = false; }
+                    else { enemy.x = enemy.formationX; enemy.y = enemy.formationY; enemy.state = 'formation'; enemy.formed = true; }
+                } else allFormed = false;
+            } else if (enemy.state === 'formation') {
+                enemy.formationX += sin(millis() * 0.001 + enemy.formationY * 0.01) * 0.5;
+                enemy.x = enemy.formationX;
+                if (random() < 0.0005 && enemy.formed) startDive(enemy);
+                if (random() < 0.002) fireEnemyBullet(enemy);
+            } else if (enemy.state === 'diving') updateDive(enemy);
+        }
+        enemyFormationComplete = allFormed;
+    }
+
+    function startDive(enemy) {
+        enemy.state = 'diving'; enemy.diveTarget = { x: player.x, y: player.y }; enemy.angle = 0;
+    }
+    function updateDive(enemy) {
+        enemy.angle += 0.08;
+        enemy.x += cos(enemy.angle) * 3;
+        enemy.y += sin(enemy.angle) * 2 + 2;
+        if (enemy.y > CANVAS_HEIGHT + 50) { enemy.x = enemy.formationX; enemy.y = -50; enemy.state = 'formation'; }
+    }
+
+    function updateBullets() {
+        for (let i = bullets.length - 1; i >= 0; i--) {
+            let bullet = bullets[i]; bullet.y -= BULLET_SPEED;
+            if (bullet.y < 0) bullets.splice(i, 1);
+        }
+    }
+    function updateEnemyBullets() {
+        for (let i = enemyBullets.length - 1; i >= 0; i--) {
+            let bullet = enemyBullets[i]; bullet.y += ENEMY_BULLET_SPEED;
+            if (bullet.y > CANVAS_HEIGHT) enemyBullets.splice(i, 1);
+        }
+    }
+    function updateExplosions() {
+        for (let i = explosions.length - 1; i >= 0; i--) {
+            let e = explosions[i]; e.frame++;
+            if (e.frame > 12) explosions.splice(i, 1);
+        }
+    }
+
+    function checkCollisions() {
+        // Tiros do jogador vs inimigos
+        for (let i = bullets.length - 1; i >= 0; i--) {
+            let bullet = bullets[i];
+            for (let j = enemies.length - 1; j >= 0; j--) {
+                let enemy = enemies[j];
+                if (collision(bullet, enemy)) {
+                    enemy.health--;
+                    bullets.splice(i, 1);
+                    if (enemy.health <= 0) {
+                        createExplosion(enemy.x, enemy.y);
+                        score += enemy.type === 'boss' ? 150 : 50;
+                        enemies.splice(j, 1);
+                    }
+                    break;
+                }
+            }
+        }
+        // Tiros inimigos vs jogador
+        for (let i = enemyBullets.length - 1; i >= 0; i--) {
+            let bullet = enemyBullets[i];
+            if (collision(bullet, player) && !player.isDead) {
+                enemyBullets.splice(i, 1);
+                hitPlayer();
+            }
+        }
+        // Inimigos vs jogador
+        for (let enemy of enemies) {
+            if (collision(enemy, player) && !player.isDead) { hitPlayer(); break; }
+        }
+    }
+
+    function collision(obj1, obj2) {
+        return obj1.x < obj2.x + obj2.width && obj1.x + obj1.width > obj2.x && obj1.y < obj2.y + obj2.height && obj1.y + obj1.height > obj2.y;
+    }
+
+    function hitPlayer() {
+        lives--;
+        createExplosion(player.x, player.y);
+        if (lives <= 0) gameState = 'gameOver';
+        else {
+            player.isDead = true;
+            setTimeout(() => { player.isDead = false; player.x = CANVAS_WIDTH / 2; }, 2000);
+        }
+    }
+
+    function checkGameState() {
+        if (enemies.length === 0) {
+            gameState = 'levelComplete';
+            setTimeout(() => { level++; gameState = 'playing'; startWave(); }, 3000);
+        }
+    }
+
+    function drawGame() {
+        drawPlayer();
+        if (capturedShip) drawCapturedShip();
+        drawEnemies();
+        drawBullets();
+        drawExplosions();
+    }
+
+    function drawPlayer() {
+        if (player.isDead && millis() % 200 < 100) return;
+        push();
+        translate(player.x, player.y);
+        imageMode(CENTER);
+        if (player.isDoubleShip) {
+            image(imgPlayer, -12, 0, 32, 32);
+            image(imgPlayer, 12, 0, 32, 32);
+        } else {
+            image(imgPlayer, 0, 0, 32, 32);
+        }
+        pop();
+    }
+
+    function drawCapturedShip() {
+        push();
+        translate(capturedShip.x, capturedShip.y);
+        imageMode(CENTER);
+        image(imgPlayer, 0, 0, 28, 28);
+        stroke(255, 100, 100, 100);
+        line(0, 0, 0, 40);
+        pop();
+    }
+
+    function drawEnemies() {
+        for (let enemy of enemies) {
+            push();
+            translate(enemy.x, enemy.y);
+            rotate(sin(millis() * 0.01) * 0.1);
+            imageMode(CENTER);
+            let sprite = enemy.type === 'boss' ? imgEnemy2 : imgEnemy;
+            image(sprite, 0, 0, 32, 32);
+            pop();
+        }
+    }
+
+    function drawBullets() {
+        fill(255, 255, 0); noStroke();
+        for (let bullet of bullets) {
+            if (player.isDoubleShip) rect(bullet.x - 3, bullet.y, 6, 15);
+            else rect(bullet.x - 1, bullet.y, 2, 10);
+        }
+        fill(255, 50, 50);
+        for (let bullet of enemyBullets) ellipse(bullet.x, bullet.y, 6, 12);
+    }
+
+    function drawExplosions() {
+        for (let e of explosions) {
+            imageMode(CENTER);
+            image(imgExplosion, e.x, e.y, 40, 40);
+        }
+    }
+
+    function drawUI() {
+        fill(255); textAlign(LEFT); textSize(20); text(`SCORE: ${score}`, 20, 30);
+        text(`LIVES: ${lives}`, 20, 60);
+        text(`LEVEL: ${level}`, 20, 90);
+        if (player.isDoubleShip) { fill(0, 255, 255); text('DOUBLE FIGHTER!', CANVAS_WIDTH - 200, 30); }
+    }
+
+    function drawGameOver() {
+        fill(255, 0, 0); textAlign(CENTER); textSize(48); text('GAME OVER', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 50);
+        fill(255); textSize(24); text(`Final Score: ${score}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2); text('Press R to Restart', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 40);
+    }
+    function drawLevelComplete() {
+        fill(0, 255, 0); textAlign(CENTER); textSize(36); text('LEVEL COMPLETE!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 50);
+        fill(255); textSize(24); text(`Level ${level} Complete`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2); text('Get Ready for Next Wave!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 40);
+    }
+
+    function keyPressed() {
+        if (key === ' ' && gameState === 'playing' && !player.isDead) {
+            if (player.isDoubleShip) {
+                bullets.push({ x: player.x - 8, y: player.y - 20, width: 4, height: 15 });
+                bullets.push({ x: player.x + 8, y: player.y - 20, width: 4, height: 15 });
+            } else {
+                bullets.push({ x: player.x, y: player.y - 20, width: 2, height: 10 });
+            }
+        }
+        if (key === 'r' || key === 'R') { score = 0; lives = 3; level = 1; gameState = 'playing'; capturedShip = null; initGame(); }
+    }
+
+    function fireEnemyBullet(enemy) {
+        enemyBullets.push({ x: enemy.x, y: enemy.y + 20, width: 6, height: 12 });
+    }
+
+    function createExplosion(x, y) {
+        explosions.push({ x: x, y: y, frame: 0 });
+    }
+    </script>
+</body>
+</html>
